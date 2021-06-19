@@ -41,6 +41,12 @@ namespace  Trips.Controllers
         [HttpPut("[action]/{id}")]
         public IActionResult UpdateTrip(int Id, [FromBody]Trip trip) 
             => Ok(_tripService.UpdateTrip(Id, trip));
+
+        [HttpDelete("[action]/{id}")]
+        public IActionResult DeleteTrip(int Id){            
+            _tripService.DeleteTrip(_tripService.GetTripById(Id));
+            return Ok();
+        }
     }
     
 }
