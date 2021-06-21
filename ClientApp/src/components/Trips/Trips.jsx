@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 export class Trips extends Component{
     constructor(props){
@@ -6,11 +7,25 @@ export class Trips extends Component{
 
         this.state = {
             trips : [],
-            loading : false
+            loading : true
         }
     }
 
+    populateTripsData(){
+        axios.get("api/Trips/GetTrips").then(result =>{
+            const response = result.data;
+            this.setState({trips : response, loading: false});
+            // console.log(this.state.trips);
+            console.log("Lodaing of the data form the api is complete")
+    })
+    }
+
+    componentDidMount(){
+        this.populateTripsData();
+    }
+
     renderAllTripsTable(trips){
+        console.log(trips);
         return (            
             <div>
                 <table class="table table-striped">
@@ -24,20 +39,19 @@ export class Trips extends Component{
                         </tr>                    
                     </thead>
                     <tbody>
-                        <tr>
-                            <td> temp name A</td>
-                            <td> temp desc </td>
-                            <td> temp start date</td>
-                            <td> temp end date</td>
-                            <td> actions</td>
-                        </tr>
-                        <tr>
-                            <td> temp name A</td>
-                            <td> temp desc </td>
-                            <td> temp start date</td>
-                            <td> temp end date</td>
-                            <td> actions</td>
-                        </tr>                    
+                        {
+                            trips.map(trip => (                                
+                                <tr key={trip.id}>
+                                    <td> {trip.name}</td>
+                                    <td> {trip.description}</td>
+                                    <td> {new Date(trip.dateStarted).toLocaleDateString()}</td>
+                                    <td> {trip.dateCompleted ? new Date(trip.dateCompleted).toLocaleDateString() : 'Incomplete'}</td>
+                                    <td> actions</td>
+                                </tr>                                    
+                            ))
+                            
+                        }
+                        
                     </tbody>
                 </table>
             </div>
