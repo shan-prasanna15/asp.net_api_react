@@ -5,6 +5,8 @@ export class Trips extends Component{
     constructor(props){
         super(props);
 
+        this.onTripUdate =  this.onTripUdate.bind(this);        
+
         this.state = {
             trips : [],
             loading : true
@@ -14,14 +16,19 @@ export class Trips extends Component{
     populateTripsData(){
         axios.get("api/Trips/GetTrips").then(result =>{
             const response = result.data;
-            this.setState({trips : response, loading: false});
-            // console.log(this.state.trips);
+            this.setState({trips : response, loading: false});            
             console.log("Lodaing of the data form the api is complete")
-    })
+        })
     }
 
     componentDidMount(){
         this.populateTripsData();
+    }
+
+    onTripUdate(id){
+        console.log("Trip id into the onTripUpdate method call is : "+ id);
+        const {history} = this.props;
+        history.push('/update/'+id);
     }
 
     renderAllTripsTable(trips){
@@ -46,7 +53,13 @@ export class Trips extends Component{
                                     <td> {trip.description}</td>
                                     <td> {new Date(trip.dateStarted).toLocaleDateString()}</td>
                                     <td> {trip.dateCompleted ? new Date(trip.dateCompleted).toLocaleDateString() : 'Incomplete'}</td>
-                                    <td> actions</td>
+                                    <td> 
+                                        <div className="form-group">
+                                            <button onClick={()=> this.onTripUdate(trip.id)} className="btn btn-success">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>                                    
                             ))
                             

@@ -24,21 +24,19 @@ namespace Trips.Data
 
         public Trip UpdateTrip(int Id, Trip trip)
         {
-            if( TripData.Trips.Exists(p => p.Id == trip.Id)){
-                    System.Console.WriteLine( $"The update failed as the ID {trip.Id} already exists");                    
+            if( !TripData.Trips.Exists(p => p.Id == Id)){
+                    System.Console.WriteLine( $"The update failed as the ID {trip.Id} doesn't exist");                    
+                    return null;
             }
             else
             {
-                if(TripData.Trips.Exists(p => p.Id == Id))
-                {
-                    DeleteTrip(GetTripById(Id));
-                    AddTrip(trip);
-                }   
-                else{
-                    AddTrip(trip);
-                }
+                Trip fetchTrip = Data.TripData.Trips.Find(p => p.Id == Id);
+                fetchTrip.Name = trip.Name;
+                fetchTrip.Description = trip.Description;
+                fetchTrip.DateStarted = trip.DateStarted;
+                fetchTrip.DateCompleted = trip.DateCompleted;
+                return fetchTrip;
             }
-            return trip;
         }
     }
 }
