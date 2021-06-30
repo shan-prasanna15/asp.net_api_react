@@ -30,6 +30,11 @@ export class Trips extends Component{
         const {history} = this.props;
         history.push('/update/'+id);
     }
+    onTripDelete(id){
+        console.log("Trip id into the onTripUpdate method call is : "+ id);
+        const {history} = this.props;
+        history.push('/delete/'+id);
+    }
 
     renderAllTripsTable(trips){
         console.log(trips);
@@ -57,6 +62,9 @@ export class Trips extends Component{
                                         <div className="form-group">
                                             <button onClick={()=> this.onTripUdate(trip.id)} className="btn btn-success">
                                                 Update
+                                            </button>
+                                            <button onClick={()=> this.onTripDelete(trip.id)} className="btn btn-danger">
+                                                Delete
                                             </button>
                                         </div>
                                     </td>
