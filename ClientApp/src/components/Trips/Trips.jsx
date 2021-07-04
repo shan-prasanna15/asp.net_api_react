@@ -9,16 +9,20 @@ export class Trips extends Component{
 
         this.state = {
             trips : [],
-            loading : true
+            loading : true,
+            failed : false,
+            error : ""
         }
     }
 
     populateTripsData(){
         axios.get("api/Trips/GetTrips").then(result =>{
             const response = result.data;
-            this.setState({trips : response, loading: false});            
+            this.setState({trips : response, loading: false, failed: false, error: ""});            
             console.log("Lodaing of the data form the api is complete")
-        })
+        }).catch( err => {
+           this.setState({trips : [], loading: false, failed: true, error: "The Data was unable to be retrieved from the server"})
+        } )
     }
 
     componentDidMount(){
@@ -85,7 +89,14 @@ export class Trips extends Component{
             <p>
                 <em>loading...</em>
             </p>
-        ) : (
+        ) : (this.state.failed) ? (
+            <div className="text-danger">
+                <p>
+                    <em>{this.state.error}</em>
+                </p>
+            </div>
+        ):
+        (
             this.renderAllTripsTable(this.state.trips)
         )
 
