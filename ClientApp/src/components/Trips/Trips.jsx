@@ -21,8 +21,9 @@ export class Trips extends Component{
             this.setState({trips : response, loading: false, failed: false, error: ""});            
             console.log("Lodaing of the data form the api is complete")
         }).catch( err => {
-           this.setState({trips : [], loading: false, failed: true, error: "The Data was unable to be retrieved from the server"})
-        } )
+           //this.setState({trips : [], loading: false, failed: true, error: "The Data was unable to be retrieved from the server"})
+           this.setState({trips : [], loading: false, failed: true, error: err.response.data})
+        })
     }
 
     componentDidMount(){

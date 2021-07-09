@@ -38,8 +38,11 @@ namespace  Trips.Controllers
 
         [HttpGet("[action]")]
         public IActionResult GetTrips(){
-            try{
+            try{                
                 return Ok(_tripService.GetAllTrips());
+            }
+            catch(NullReferenceException e){                
+                return BadRequest("The server failed to fetch data, contact Administrator! /n"+ e);
             }
             catch(Exception e){
                 return BadRequest(e.Message);
