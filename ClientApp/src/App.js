@@ -3,7 +3,7 @@ import { Route } from 'react-router';
 import { Layout } from './components/Layout';
 
 import './custom.css'
-import { Trips } from './components/Trips/Trips';
+import Trips from './components/Trips/Trips';
 import { Create } from './components/Trips/Create';
 import { Update } from './components/Trips/Update';
 import { Delete } from './components/Trips/Delete';
