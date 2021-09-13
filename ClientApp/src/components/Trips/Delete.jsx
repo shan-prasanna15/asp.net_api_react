@@ -70,7 +70,7 @@ export class Delete extends Component{
                         <h4 class="card-title"> {this.state.name} </h4>
                         <p class="card-text"> {this.state.description} </p>
                         <div className="form-group">
-                            <button onClick={this.onConfirmDelete} className="btn btn-danger" >Delete test</button>
+                            <button onClick={this.onConfirmDelete} className="btn btn-danger" >Delete</button>
                             <button onClick={this.OnCancelDelete} className="btn btn-default" >Cancel</button>
                         </div>
                     </div>
